@@ -4,18 +4,18 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-import os
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
+DATABASE_URL = "mysql+pymysql://root:Jojo%%40123@127.0.0.1:3306/recipe_app_db"
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-
-fileConfig(config.config_file_name)
-
-DATABASE_URL = f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DATABASE_URL')}:{os.getenv('DATABASE_PORT')}/{os.getenv('DATABASE_NAME')}"
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
