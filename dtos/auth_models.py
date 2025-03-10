@@ -6,10 +6,10 @@ from datetime import datetime
 
 class Token(BaseModel):
     access_token: str
-    token_type: Optional[str] = 'Bearer'
+    token_type: Optional[str] = "Bearer"
 
 
-class AddUserRole(str, Enum):
+class UserRoleEnum(str, Enum):
     admin = "admin"
     user = "user"
 
@@ -24,4 +24,6 @@ class UserModel(BaseModel):
     profilePhoto: Optional[str] = None
     dateOfBirth: Optional[datetime] = None
     phoneNumber: Optional[str] = None
-    role: AddUserRole
+    role: UserRoleEnum
+    followersCount: int
+    followingCount: int

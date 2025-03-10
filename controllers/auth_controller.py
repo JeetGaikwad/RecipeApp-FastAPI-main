@@ -12,8 +12,9 @@ class AuthController:
         user = Hash.authenticate_user(
             username=request.username, password=request.password
         )
-        access_token = TokenHelper.create_access_token(data={"id": user.id})
-        response = Token(access_token=access_token, **user.model_dump())
-        return APIHelper.send_success_response(
-            data=response, successMessageKey="translations.LOGIN_SUCCESS"
-        )
+        access_token = TokenHelper.create_access_token({"id": user.id})
+        response = Token(access_token=access_token)
+        return response
+        # return APIHelper.send_success_response(
+        #     data=response, successMessageKey="translations.LOGIN_SUCCESS"
+        # )

@@ -4,6 +4,10 @@ from models.user_table import Users
 
 
 class DBHelper:
+    def get_user_by_email(email: str):
+        with Session(engine) as session:
+            return session.query(Users).filter(Users.email == email).first()
+
     def get_user_by_username(username: str):
         with Session(engine) as session:
             return session.query(Users).filter(Users.username == username).first()

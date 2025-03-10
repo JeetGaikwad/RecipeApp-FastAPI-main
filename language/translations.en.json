@@ -4,6 +4,18 @@
     "FAILURE": "failure",
     "UNAUTHORIZED": "You are unauthorized",
     "LOGIN_SUCCESS": "Logged in successfully",
-    "INVALID_CREDENTIAL": "Invalid Username or Password"
+    "INVALID_CREDENTIAL": "Invalid Username or Password",
+    "INVALID_EMAIL": "Email is invalid or already exist",
+    "USER_EXISTS": "User already exists",
+    "INVALID_MOBILE": "Mobile number is invalid",
+    "INVALID_PASSWORD": "Password is invalid",
+    "DATABASE_ERROR": "Database connection error",
+    "USER_CREATED": "User created Successfully",
+    "USER_FOUND": "User found Successfully",
+    "UNAUTHORIZE_USER": "Unauthorize user",
+    "PASSWORD_CHANGED": "Password change successfully",
+    "PROFILE_UPDATED": "Profile Update Successfully",
+    "ALREADY_FOLLOW": "You already follow the user",
+    "DO_NOT_FOLLOW": "You have not followed the user"
   }
 }

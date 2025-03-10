@@ -8,5 +8,4 @@ class BaseResponseModel(BaseModel):
 
 
 class BaseErrorModel(BaseModel):
-    data: Any
     error: Optional[str] = None

@@ -40,7 +40,8 @@ class TokenHelper:
             return APIHelper.send_unauthorized_error(
                 errorMessageKey="translations.UNAUTHORIZED"
             )
-        return UserModel(**user._mapping)
+
+        return UserModel(**user.__dict__)
 
     def get_current_user(token: str = Depends(oauth2_scheme)) -> UserModel:
         return TokenHelper.verify_token(token)
