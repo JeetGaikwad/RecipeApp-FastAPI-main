@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Enum
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from config.db_config import Base
 
@@ -26,4 +27,8 @@ class Users(Base):
     createdAt = Column(DateTime, nullable=False, server_default=func.now())
     updatedAt = Column(
         DateTime, nullable=True, server_default=func.now(), onupdate=func.now()
+    )
+
+    recipe_likes = relationship(
+        "RecipeLike", back_populates="user", cascade="all, delete-orphan"
     )

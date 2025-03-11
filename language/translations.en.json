@@ -3,7 +3,7 @@
     "SUCCESS": "success",
     "FAILURE": "failure",
     "UNAUTHORIZED": "You are unauthorized",
-    "LOGIN_SUCCESS": "Logged in successfully",
+    "LOGIN_SUCCESS": "Logged in Successfully",
     "INVALID_CREDENTIAL": "Invalid Username or Password",
     "INVALID_EMAIL": "Email is invalid or already exist",
     "USER_EXISTS": "User already exists",
@@ -13,10 +13,15 @@
     "USER_CREATED": "User created Successfully",
     "USER_FOUND": "User found Successfully",
     "UNAUTHORIZE_USER": "Unauthorize user",
-    "PASSWORD_CHANGED": "Password change successfully",
+    "PASSWORD_CHANGED": "Password change Successfully",
     "PROFILE_UPDATED": "Profile Update Successfully",
     "ALREADY_FOLLOW": "You already follow the user",
     "DO_NOT_FOLLOW": "You have not followed the user",
-    "USER_ALREADY_EXISTS": "User already exists"
+    "USER_ALREADY_EXISTS": "User already exists",
+    "RECIPE_NOT_FOUND": "Recipe does not exists",
+    "RECIPE_CREATED": "Recipe created Successfully",
+    "RECIPE_UPDATED": "Recipe updated Successfully",
+    "ALREADY_LIKED": "You already liked the recipe",
+    "NOT_LIKED": "You did not liked the recipe"
   }
 }
