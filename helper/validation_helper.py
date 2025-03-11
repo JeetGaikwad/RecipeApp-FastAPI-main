@@ -7,7 +7,7 @@ from utils.db_helper import DBHelper
 
 class ValidationHelper:
     @staticmethod
-    def is_valid_email(cls, v):
+    def is_valid_email(v):
         if not re.fullmatch(Constants.EMAIL_REGEX, v):
             raise ValueError(i18n.t(key="translations.INVALID_EMAIL"))
         user = DBHelper.get_user_by_email(v)
@@ -18,13 +18,13 @@ class ValidationHelper:
         return v
 
     @staticmethod
-    def is_mobile(cls, v):
+    def is_mobile(v):
         if not re.fullmatch(Constants.MOBILE_NUMBER_REGEX, v):
             raise ValueError(i18n.t(key="translations.INVALID_MOBILE"))
         return v
 
     @staticmethod
-    def is_valid_password(cls, v):
+    def is_valid_password(v):
         if not re.fullmatch(Constants.PASSWORD_REGEX, v):
             raise ValueError(i18n.t(key="translations.INVALID_PASSWORD"))
         return v

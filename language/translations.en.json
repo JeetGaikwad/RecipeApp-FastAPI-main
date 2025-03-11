@@ -16,6 +16,7 @@
     "PASSWORD_CHANGED": "Password change successfully",
     "PROFILE_UPDATED": "Profile Update Successfully",
     "ALREADY_FOLLOW": "You already follow the user",
-    "DO_NOT_FOLLOW": "You have not followed the user"
+    "DO_NOT_FOLLOW": "You have not followed the user",
+    "USER_ALREADY_EXISTS": "User already exists"
   }
 }

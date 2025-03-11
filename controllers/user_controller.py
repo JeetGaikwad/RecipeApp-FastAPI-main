@@ -1,7 +1,7 @@
 # Importing libraries
 from dtos.auth_models import UserModel
 from dtos.base_response_model import BaseResponseModel
-from dtos.user_models import UpdateUserRequest
+from dtos.user_models import UpdateUserRequest, CreateUserModel
 from helper.api_helper import APIHelper
 from config.db_config import SessionLocal
 from helper.hashing import Hash
@@ -13,13 +13,59 @@ from sqlalchemy.exc import SQLAlchemyError
 class UserController:
 
     @staticmethod
+    def create_user(user_data: CreateUserModel) -> BaseResponseModel:
+        try:
+            with SessionLocal() as session:
+                existing_user = (
+                    session.query(Users)
+                    .filter(
+                        (Users.email == user_data.email)
+                        | (Users.username == user_data.username)
+                    )
+                    .first()
+                )
+
+                if existing_user:
+                    return APIHelper.send_error_response(
+                        errorMessageKey="translations.USER_ALREADY_EXISTS"
+                    )
+
+                hashed_password = Hash.get_hash(user_data.password)
+
+                new_user = Users(
+                    email=user_data.email,
+                    username=user_data.username,
+                    firstName=user_data.firstName,
+                    lastName=user_data.lastName,
+                    bio=user_data.bio,
+                    profilePhoto=user_data.profilePhoto,
+                    dateOfBirth=user_data.dateOfBirth,
+                    phoneNumber=user_data.phoneNumber,
+                    password=hashed_password,
+                    role=user_data.role,
+                )
+
+                session.add(new_user)
+                session.commit()
+                session.refresh(new_user)
+
+                return APIHelper.send_success_response(
+                    successMessageKey="translations.USER_CREATED"
+                )
+
+        except SQLAlchemyError:
+            return APIHelper.send_error_response(
+                errorMessageKey="translations.DATABASE_ERROR"
+            )
+
+    @staticmethod
     def get_user(user_id: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
                 user = session.query(Users).filter(Users.id == user_id).first()
                 if not user:
                     return APIHelper.send_error_response(
-                        errorMessageKey="translations.USER_NOT_FOUND"
+                        errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
                 return APIHelper.send_success_response(
                     data=UserModel(

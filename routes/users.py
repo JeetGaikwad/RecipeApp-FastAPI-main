@@ -1,7 +1,7 @@
 # Importing libraries
 from typing import Annotated
 from fastapi import APIRouter, Depends
-from controllers.user_controller import UserController
+from controllers.user_controller import UserController, CreateUserModel
 from dtos.auth_models import UserModel
 from helper.token_helper import TokenHelper
 from dtos.user_models import UserVerification, UpdateUserRequest
@@ -10,6 +10,11 @@ from dtos.user_models import UserVerification, UpdateUserRequest
 user = APIRouter(tags=["User"])
 
 user_dependency = Annotated[dict, Depends(TokenHelper.get_current_user)]
+
+
+@user.post("/create/user")
+async def create_user(request: CreateUserModel):
+    return UserController.create_user(request)
 
 
 @user.get("/user")
