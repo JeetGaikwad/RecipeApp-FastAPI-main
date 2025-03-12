@@ -1,7 +1,6 @@
 # Importing libraries
 from dtos.auth_models import Token
 from dtos.base_response_model import BaseResponseModel
-from helper.api_helper import APIHelper
 from helper.token_helper import TokenHelper
 from helper.hashing import Hash
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm

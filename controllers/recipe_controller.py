@@ -3,7 +3,6 @@ from dtos.base_response_model import BaseResponseModel
 from dtos.recipe_models import RecipeResponseModel, RecipeRequestModel, RecipeTypeEnum
 from helper.api_helper import APIHelper
 from config.db_config import SessionLocal
-from helper.hashing import Hash
 from models.recipe_table import Recipes
 from models.recipe_likes_table import RecipeLike
 from sqlalchemy.exc import SQLAlchemyError

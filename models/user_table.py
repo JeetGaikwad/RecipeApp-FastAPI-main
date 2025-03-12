@@ -32,3 +32,10 @@ class Users(Base):
     recipe_likes = relationship(
         "RecipeLike", back_populates="user", cascade="all, delete-orphan"
     )
+
+    forked_recipes = relationship(
+        "ForkedRecipe",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

@@ -41,3 +41,10 @@ class Recipes(Base):
     likes = relationship(
         "RecipeLike", back_populates="recipe", cascade="all, delete-orphan"
     )
+
+    forked_recipes = relationship(
+        "ForkedRecipe",
+        back_populates="recipe",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
