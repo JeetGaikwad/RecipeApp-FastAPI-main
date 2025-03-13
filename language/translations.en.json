@@ -25,6 +25,12 @@
     "RECIPE_CREATED": "Recipe created Successfully",
     "RECIPE_UPDATED": "Recipe updated Successfully",
     "ALREADY_LIKED": "You already liked the recipe",
-    "NOT_LIKED": "You did not liked the recipe"
+    "NOT_LIKED": "You did not liked the recipe",
+    "COMMENT_NOT_FOUND": "No comments available for this recipe.",
+    "PARENT_COMMENT_NOT_FOUND": "Parent comment is not available in the recipe,",
+    "COMMENT_ADDED": "Comment added Successfully",
+    "COMMENT_UPDATED": "Comment updated Successfully",
+    "COMMENT_DELETED": "Comment deleted Successfully",
+    "EMPTY_COMMENT": "PLease enter your comment"
   }
 }

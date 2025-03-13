@@ -16,6 +16,7 @@ from routes.users import user
 from routes.recipes import recipe
 from routes.forked_recipes import forked_recipe
 from routes.recipe_ingredients import ingredient
+from routes.comments import recipe_comment
 from fastapi.exceptions import RequestValidationError
 import i18n
 
@@ -56,3 +57,4 @@ app.include_router(user)
 app.include_router(recipe)
 app.include_router(forked_recipe)
 app.include_router(ingredient)
+app.include_router(recipe_comment)

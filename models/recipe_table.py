@@ -54,3 +54,10 @@ class Recipes(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+
+    comments = relationship(
+        "RecipeComment",
+        back_populates="recipe",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
