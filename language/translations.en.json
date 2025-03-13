@@ -31,6 +31,7 @@
     "COMMENT_ADDED": "Comment added Successfully",
     "COMMENT_UPDATED": "Comment updated Successfully",
     "COMMENT_DELETED": "Comment deleted Successfully",
-    "EMPTY_COMMENT": "PLease enter your comment"
+    "EMPTY_COMMENT": "PLease enter your comment",
+    "HISTORY_NOT_FOUND": "History does not exists"
   }
 }

@@ -49,3 +49,10 @@ class Users(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+
+    cooking_historys = relationship(
+        "CookingHistory",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
