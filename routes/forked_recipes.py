@@ -1,10 +1,9 @@
 # Importing libraries
-from typing import Annotated, Optional
+from typing import Annotated
 from fastapi import APIRouter, Depends
 from helper.token_helper import TokenHelper
 from controllers.forked_recipe_controller import ForkedRecipeController
 from dtos.forked_recipe_models import ForkedRecipeRequestModel
-from config.constants import Constants
 
 # Declaring router
 forked_recipe = APIRouter(tags=["Forked-Recipe"])

@@ -2,7 +2,6 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends
 from controllers.user_controller import UserController, CreateUserModel
-from dtos.auth_models import UserModel
 from helper.token_helper import TokenHelper
 from dtos.user_models import UserVerification, UpdateUserRequest
 

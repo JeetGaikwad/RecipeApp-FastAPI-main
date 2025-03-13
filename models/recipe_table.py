@@ -8,7 +8,6 @@ from sqlalchemy import (
     Enum,
     func,
 )
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from enum import Enum as PyEnum
 from config.db_config import Base
@@ -45,6 +44,13 @@ class Recipes(Base):
     forked_recipes = relationship(
         "ForkedRecipe",
         back_populates="recipe",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    recipe_ingredients = relationship(
+        "RecipeIngredient",
+        back_populates="recipe_ing",
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
