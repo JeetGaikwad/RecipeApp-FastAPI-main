@@ -19,6 +19,7 @@ from routes.recipe_ingredients import ingredient
 from routes.comments import recipe_comment
 from routes.cooking_historys import cooking_history
 from routes.wishlists import wishlist
+from routes.admins import admin
 from fastapi.exceptions import RequestValidationError
 import i18n
 
@@ -62,3 +63,4 @@ app.include_router(ingredient)
 app.include_router(recipe_comment)
 app.include_router(cooking_history)
 app.include_router(wishlist)
+app.include_router(admin)
