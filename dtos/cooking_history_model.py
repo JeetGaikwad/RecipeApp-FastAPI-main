@@ -6,13 +6,12 @@ class CookingHistoryResponse(BaseModel):
     userId: int
     recipeId: int
     recipeName: str
-    recipeDescription: str | None = None  
+    recipeDescription: str | None = None
     likesCount: int | None = 0
-    createdAt: datetime 
+    createdAt: datetime
 
     class Config:
         from_attributes = True
-
 
 
 class CookingHistoryRequest(BaseModel):

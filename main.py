@@ -18,6 +18,7 @@ from routes.forked_recipes import forked_recipe
 from routes.recipe_ingredients import ingredient
 from routes.comments import recipe_comment
 from routes.cooking_historys import cooking_history
+from routes.wishlists import wishlist
 from fastapi.exceptions import RequestValidationError
 import i18n
 
@@ -31,7 +32,7 @@ i18n.set("file_format", "json")
 
 # Initializing app
 app = FastAPI(
-    title="Boilerplate-FastAPI",
+    title="RecipeApp-FastAPI",
     version="0.0.1",
 )
 
@@ -60,3 +61,4 @@ app.include_router(forked_recipe)
 app.include_router(ingredient)
 app.include_router(recipe_comment)
 app.include_router(cooking_history)
+app.include_router(wishlist)

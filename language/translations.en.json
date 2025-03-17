@@ -32,6 +32,9 @@
     "COMMENT_UPDATED": "Comment updated Successfully",
     "COMMENT_DELETED": "Comment deleted Successfully",
     "EMPTY_COMMENT": "PLease enter your comment",
-    "HISTORY_NOT_FOUND": "History does not exists"
+    "HISTORY_NOT_FOUND": "History does not exists",
+    "WISHLIST_NOT_FOUND": "Wishlist does not exists",
+    "WISHLIST_EXIST": "Recipe already exist in the Wishlist.",
+    "WISHLIST_UPDATED":"Wishlist updated Successfully."
   }
 }
