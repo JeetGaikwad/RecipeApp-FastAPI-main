@@ -9,7 +9,13 @@ __pycache__/
 __pycache__
 *.py[cod]
 *$py.class
-
+config/__pycache__
+controllers/__pycache__
+dtos/__pycache__
+helper/__pycache__
+models/__pycache__
+routes/__pycache__
+utils/__pycache__
 # C extensions
 *.so
 
