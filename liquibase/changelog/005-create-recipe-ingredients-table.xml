@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create recipe_ingredients table -->
+    <changeSet id="005-create-recipe-ingredients-table" author="your_name">
+        <createTable tableName="recipe_ingredients">
+            <column name="id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ingredientId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit" type="ENUM('gram', 'kilogram', 'liter', 'mililiter', 'teaspoon', 'tablespoon', 'cup', 'piece')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Foreign Key Constraint: ingredientId -> ingredients.id -->
+        <addForeignKeyConstraint baseTableName="recipe_ingredients"
+                                 baseColumnNames="ingredientId"
+                                 constraintName="fk_recipe_ingredients_ingredient"
+                                 referencedTableName="ingredients"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: recipeId -> recipes.id -->
+        <addForeignKeyConstraint baseTableName="recipe_ingredients"
+                                 baseColumnNames="recipeId"
+                                 constraintName="fk_recipe_ingredients_recipe"
+                                 referencedTableName="recipes"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Index for faster lookups -->
+        <createIndex indexName="ix_recipe_ingredients_id" tableName="recipe_ingredients">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

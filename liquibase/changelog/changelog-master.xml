@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Include individual changelog files -->
+    <include file="changelog/001-create-users-table.xml"/>
+    <include file="changelog/002-create-recipes-table.xml"/>
+    <include file="changelog/003-create-forked-recipes-table.xml"/>
+    <include file="changelog/004-create-ingredients-table.xml"/>
+    <include file="changelog/005-create-recipe-ingredients-table.xml"/>
+    <include file="changelog/006-create-follows-table.xml"/>
+    <include file="changelog/007-create-recipe-likes-table.xml"/>
+    <include file="changelog/008-create-recipe-comments-table.xml"/>
+    <include file="changelog/009-create-wishlists-table.xml"/>
+    <include file="changelog/010-create-cooking-historys-table.xml"/>
+
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create recipe_likes table -->
+    <changeSet id="007-create-recipe-likes-table" author="your_name">
+        <createTable tableName="recipe_likes">
+            <column name="userId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Composite Primary Key -->
+        <addPrimaryKey tableName="recipe_likes" columnNames="userId, recipeId" constraintName="pk_recipe_likes"/>
+
+        <!-- Foreign Key Constraint: userId -> users.id -->
+        <addForeignKeyConstraint baseTableName="recipe_likes"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_recipe_likes_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: recipeId -> recipes.id -->
+        <addForeignKeyConstraint baseTableName="recipe_likes"
+                                 baseColumnNames="recipeId"
+                                 constraintName="fk_recipe_likes_recipe"
+                                 referencedTableName="recipes"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>

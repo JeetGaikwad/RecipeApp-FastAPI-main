@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <changeSet id="001-create-users-table" author="your_name">
+        <createTable tableName="users">
+            <column name="id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="firstName" type="VARCHAR(255)" />
+            <column name="lastName" type="VARCHAR(255)" />
+            <column name="bio" type="VARCHAR(500)" />
+            <column name="profilePhoto" type="VARCHAR(255)" />
+            <column name="dateOfBirth" type="DATETIME" />
+            <column name="phoneNumber" type="VARCHAR(30)" />
+            <column name="password" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="ENUM('admin', 'user')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="followersCount" type="INT" defaultValueNumeric="0" />
+            <column name="followingCount" type="INT" defaultValueNumeric="0" />
+            <column name="isBlocked" type="BOOLEAN" />
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="ix_users_id" tableName="users">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

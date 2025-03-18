@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <changeSet id="003-create-forked-recipes-table" author="your_name">
+        <createTable tableName="forked_recipes">
+            <column name="id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="userId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeName" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="recipeType" type="ENUM('veg', 'nonveg')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="peopleCount" type="INT" defaultValueNumeric="1"/>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Foreign Key Constraint: recipeId -> recipes.id -->
+        <addForeignKeyConstraint baseTableName="forked_recipes"
+                                 baseColumnNames="recipeId"
+                                 constraintName="fk_forked_recipes_recipe"
+                                 referencedTableName="recipes"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: userId -> users.id -->
+        <addForeignKeyConstraint baseTableName="forked_recipes"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_forked_recipes_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Index for faster lookups -->
+        <createIndex indexName="ix_forked_recipes_id" tableName="forked_recipes">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

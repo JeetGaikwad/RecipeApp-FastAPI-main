@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <changeSet id="002-create-recipes-table" author="your_name">
+        <createTable tableName="recipes">
+            <column name="id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="userId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeName" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="recipeType" type="ENUM('veg', 'nonveg')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="peopleCount" type="INT" defaultValueNumeric="1"/>
+            <column name="likesCount" type="INT" defaultValueNumeric="0"/>
+            <column name="forkedCount" type="INT" defaultValueNumeric="0"/>
+            <column name="isDeleted" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="isHide" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deletedAt" type="DATETIME"/>
+        </createTable>
+
+        <!-- Correct way to add Foreign Key Constraint -->
+        <addForeignKeyConstraint baseTableName="recipes"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_recipes_users"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <createIndex indexName="ix_recipes_id" tableName="recipes">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

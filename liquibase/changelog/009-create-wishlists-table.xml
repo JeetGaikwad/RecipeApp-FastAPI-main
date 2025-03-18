@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create wishlists table -->
+    <changeSet id="009-create-wishlists-table" author="your_name">
+        <createTable tableName="wishlists">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_wishlists"/>
+            </column>
+            <column name="userId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visibility" type="ENUM('public', 'private')" defaultValue="private">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Foreign Key Constraint: userId -> users.id -->
+        <addForeignKeyConstraint baseTableName="wishlists"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_wishlists_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: recipeId -> recipes.id -->
+        <addForeignKeyConstraint baseTableName="wishlists"
+                                 baseColumnNames="recipeId"
+                                 constraintName="fk_wishlists_recipe"
+                                 referencedTableName="recipes"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Index on id -->
+        <createIndex indexName="ix_wishlists_id" tableName="wishlists">
+            <column name="id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

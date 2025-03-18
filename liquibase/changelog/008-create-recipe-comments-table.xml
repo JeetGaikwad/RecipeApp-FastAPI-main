@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create recipe_comments table -->
+    <changeSet id="008-create-recipe-comments-table" author="your_name">
+        <createTable tableName="recipe_comments">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_recipe_comments"/>
+            </column>
+            <column name="userId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parentCommentId" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Foreign Key Constraint: userId -> users.id -->
+        <addForeignKeyConstraint baseTableName="recipe_comments"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_recipe_comments_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: recipeId -> recipes.id -->
+        <addForeignKeyConstraint baseTableName="recipe_comments"
+                                 baseColumnNames="recipeId"
+                                 constraintName="fk_recipe_comments_recipe"
+                                 referencedTableName="recipes"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: parentCommentId -> recipe_comments.id (Self-referencing for nested comments) -->
+        <addForeignKeyConstraint baseTableName="recipe_comments"
+                                 baseColumnNames="parentCommentId"
+                                 constraintName="fk_recipe_comments_parent"
+                                 referencedTableName="recipe_comments"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Index on id -->
+        <createIndex indexName="ix_recipe_comments_id" tableName="recipe_comments">
+            <column name="id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

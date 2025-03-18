@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create follows table -->
+    <changeSet id="006-create-follows-table" author="your_name">
+        <createTable tableName="follows">
+            <column name="followerId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="followeeId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Composite Primary Key -->
+        <addPrimaryKey tableName="follows" columnNames="followerId, followeeId" constraintName="pk_follows"/>
+
+        <!-- Foreign Key Constraint: followerId -> users.id -->
+        <addForeignKeyConstraint baseTableName="follows"
+                                 baseColumnNames="followerId"
+                                 constraintName="fk_follows_follower"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <!-- Foreign Key Constraint: followeeId -> users.id -->
+        <addForeignKeyConstraint baseTableName="follows"
+                                 baseColumnNames="followeeId"
+                                 constraintName="fk_follows_followee"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
