@@ -28,6 +28,9 @@
             <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
                 <constraints nullable="false"/>
             </column>
+            <column name="updatedAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
             <column name="deletedAt" type="DATETIME"/>
         </createTable>
 

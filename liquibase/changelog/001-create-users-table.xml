@@ -34,6 +34,9 @@
             <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
                 <constraints nullable="false"/>
             </column>
+            <column name="updatedAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createIndex indexName="ix_users_id" tableName="users">

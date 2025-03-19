@@ -20,6 +20,9 @@
             <column name="createdAt" type="DATETIME" defaultValueComputed="NOW()">
                 <constraints nullable="false"/>
             </column>
+            <column name="updatedAt" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <!-- Foreign Key Constraint: userId -> users.id -->
