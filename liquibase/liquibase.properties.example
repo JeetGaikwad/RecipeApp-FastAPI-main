@@ -1,0 +1,23 @@
+
+changeLogFile=changelog/changelog-master.xml
+
+liquibase.command.url=jdbc:mysql://127.0.0.1:3306/recipe_app_db
+
+liquibase.command.username: 
+
+liquibase.command.password: 
+
+liquibase.command.referenceUrl: jdbc:mysql://localhost:3306/recipe_app_db
+
+# Enter the username for your source database
+liquibase.command.referenceUsername: root
+
+# Enter the password for your source database
+liquibase.command.referencePassword: 
+
+driver=com.mysql.cj.jdbc.Driver
+classpath=/usr/share/java/mysql-connector-java-9.2.0.jar
+
+# Log settings
+logLevel=INFO
+logFile=liquibase.log
