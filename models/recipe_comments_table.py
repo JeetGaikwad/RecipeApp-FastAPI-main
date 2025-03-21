@@ -6,7 +6,7 @@ from config.db_config import Base
 class RecipeComment(Base):
     __tablename__ = "recipe_comments"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     userId = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     recipeId = Column(
         Integer, ForeignKey("recipes.id", ondelete="CASCADE"), nullable=False

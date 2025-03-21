@@ -5,7 +5,7 @@ from config.db_config import Base
 class Wishlist(Base):
     __tablename__ = "wishlists"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     userId = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     recipeId = Column(
         Integer, ForeignKey("recipes.id", ondelete="CASCADE"), nullable=False

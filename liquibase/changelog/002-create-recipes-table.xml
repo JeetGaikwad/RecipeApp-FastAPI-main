@@ -7,7 +7,7 @@
 
     <changeSet id="002-create-recipes-table" author="your_name">
         <createTable tableName="recipes">
-            <column name="id" type="INT">
+            <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="userId" type="INT">

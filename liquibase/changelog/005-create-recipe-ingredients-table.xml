@@ -8,7 +8,7 @@
     <!-- Create recipe_ingredients table -->
     <changeSet id="005-create-recipe-ingredients-table" author="your_name">
         <createTable tableName="recipe_ingredients">
-            <column name="id" type="INT">
+            <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="ingredientId" type="INT">

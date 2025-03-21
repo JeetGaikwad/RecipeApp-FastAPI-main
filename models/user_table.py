@@ -10,7 +10,7 @@ UserRoleEnum = Enum("user", "admin", name="user_role_enum")
 class Users(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     email = Column(String(255), unique=True, nullable=False)
     username = Column(String(255), unique=True, nullable=False)
     firstName = Column(String(255))

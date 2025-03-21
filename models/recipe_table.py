@@ -21,7 +21,7 @@ class RecipeTypeEnum(str, PyEnum):
 class Recipes(Base):
     __tablename__ = "recipes"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     userId = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     recipeName = Column(String(255), nullable=False)
     description = Column(String(500), nullable=True)
