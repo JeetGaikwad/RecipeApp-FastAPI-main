@@ -27,7 +27,7 @@ import i18n
 setup_logger()
 
 # Setup i18n
-i18n.set("load_path", ["language/"]) 
+i18n.load_path.append("language/") 
 i18n.set("filename_format", "{namespace}.{locale}.{format}")
 i18n.set("file_format", "json")
 
