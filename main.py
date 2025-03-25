@@ -10,7 +10,8 @@ dotenv_path = join(dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
 # Importing libraries
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
@@ -87,6 +88,12 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         )
 
 
+# Custom 404 Error Handler
+@app.exception_handler(404)
+async def custom_404_handler(request: Request, exc: HTTPException):
+    return JSONResponse(status_code=404, content={"detail": "Not Found"})
+
+
 # Including the routes
 app.include_router(auth)
 app.include_router(user)
@@ -97,3 +104,13 @@ app.include_router(recipe_comment)
 app.include_router(cooking_history)
 app.include_router(wishlist)
 app.include_router(admin)
+
+
+# Catch all undefined routes
+@app.api_route(
+    "/{full_path:path}",
+    methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    include_in_schema=False,
+)
+async def catch_all(full_path: str):
+    raise HTTPException(status_code=404, detail="Route Not Found")
