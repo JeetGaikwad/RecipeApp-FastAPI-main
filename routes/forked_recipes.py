@@ -1,9 +1,10 @@
 # Importing libraries
-from typing import Annotated
+from typing import Annotated, Optional
 from fastapi import APIRouter, Depends
 from helper.token_helper import TokenHelper
 from controllers.forked_recipe_controller import ForkedRecipeController
 from dtos.forked_recipe_models import ForkedRecipeRequestModel
+from config.constants import Constants
 
 # Declaring router
 forked_recipe = APIRouter(tags=["Forked-Recipe"])
@@ -12,8 +13,10 @@ user_dependency = Annotated[dict, Depends(TokenHelper.get_current_user)]
 
 
 @forked_recipe.get("/forked-recipes")
-async def get_all_forked_recipes(user: user_dependency):
-    return ForkedRecipeController.get_all_forked_recipes(user.id)
+async def get_all_forked_recipes(
+    user: user_dependency, page: int, size: Optional[int] = Constants.PAGE_SIZE
+):
+    return ForkedRecipeController.get_all_forked_recipes(user.id, page, size)
 
 
 @forked_recipe.get("/forked-recipes/{forked_id}")

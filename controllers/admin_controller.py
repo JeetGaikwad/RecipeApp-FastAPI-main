@@ -2,6 +2,7 @@
 from dtos.base_response_model import BaseResponseModel
 from dtos.recipe_models import RecipeResponseModel
 from helper.api_helper import APIHelper
+from helper.pagination_helper import PaginationHelper
 from config.db_config import SessionLocal
 from models.recipe_table import Recipes
 from models.user_table import Users
@@ -24,9 +25,9 @@ class AdminController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                recipes = (
-                    session.query(Recipes).offset((page - 1) * size).limit(size).all()
-                )
+                query = session.query(Recipes)
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -164,13 +165,9 @@ class AdminController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                users = (
-                    session.query(Users)
-                    .order_by(Users.createdAt.desc())
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
-                )
+                query = session.query(Users).order_by(Users.createdAt.desc())
+
+                users = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not users:
                     return APIHelper.send_error_response(

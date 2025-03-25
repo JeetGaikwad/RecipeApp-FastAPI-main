@@ -1,6 +1,7 @@
 # Importing libraries
 from dtos.base_response_model import BaseResponseModel
 from helper.api_helper import APIHelper
+from helper.pagination_helper import PaginationHelper
 from config.db_config import SessionLocal
 from models.recipe_table import Recipes
 from models.cooking_history_table import CookingHistory
@@ -13,7 +14,9 @@ from datetime import datetime
 class CookingHistoryController:
 
     @staticmethod
-    def get_user_cooking_history(user_id: int) -> BaseResponseModel:
+    def get_user_cooking_history(
+        user_id: int, page: int, size: int
+    ) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
                 user = DBHelper.get_user_by_id(user_id)
@@ -22,7 +25,7 @@ class CookingHistoryController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                histories = (
+                query = (
                     session.query(
                         CookingHistory,
                         Recipes.recipeName,
@@ -32,8 +35,9 @@ class CookingHistoryController:
                     .join(Recipes, CookingHistory.recipeId == Recipes.id)
                     .filter(CookingHistory.userId == user_id)
                     .order_by(CookingHistory.createdAt.desc())
-                    .all()
                 )
+
+                histories = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not histories:
                     return APIHelper.send_error_response(

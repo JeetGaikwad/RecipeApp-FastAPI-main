@@ -1,6 +1,7 @@
 # Importing libraries
 from dtos.base_response_model import BaseResponseModel
 from helper.api_helper import APIHelper
+from helper.pagination_helper import PaginationHelper
 from config.db_config import SessionLocal
 from models.forked_recipe_table import ForkedRecipe
 from models.recipe_table import Recipes
@@ -16,7 +17,7 @@ from dtos.recipe_models import RecipeTypeEnum
 class ForkedRecipeController:
 
     @staticmethod
-    def get_all_forked_recipes(user_id: int) -> BaseResponseModel:
+    def get_all_forked_recipes(user_id: int, page: int, size: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
                 user = DBHelper.get_user_by_id(user_id)
@@ -25,11 +26,11 @@ class ForkedRecipeController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                recipes = (
-                    session.query(ForkedRecipe)
-                    .filter(ForkedRecipe.userId == user_id)
-                    .all()
+                query = session.query(ForkedRecipe).filter(
+                    ForkedRecipe.userId == user_id
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(

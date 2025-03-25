@@ -1,6 +1,7 @@
 # Importing libraries
 from dtos.base_response_model import BaseResponseModel
 from helper.api_helper import APIHelper
+from helper.pagination_helper import PaginationHelper
 from config.db_config import SessionLocal
 from models.recipe_table import Recipes
 from models.wishlist_table import Wishlist
@@ -17,7 +18,9 @@ from dtos.wishlist_models import (
 class WishlistController:
 
     @staticmethod
-    def get_all_public_wishlist(user_id: int) -> BaseResponseModel:
+    def get_all_public_wishlist(
+        user_id: int, page: int, size: int
+    ) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
                 user = DBHelper.get_user_by_id(user_id)
@@ -26,11 +29,11 @@ class WishlistController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                wishlists = (
-                    session.query(Wishlist)
-                    .filter(Wishlist.visibility == VisibilityEnum.public)
-                    .all()
+                query = session.query(Wishlist).filter(
+                    Wishlist.visibility == VisibilityEnum.public
                 )
+
+                wishlists = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not wishlists:
                     return APIHelper.send_error_response(
@@ -51,7 +54,7 @@ class WishlistController:
             )
 
     @staticmethod
-    def get_user_wishlist(user_id: int) -> BaseResponseModel:
+    def get_user_wishlist(user_id: int, page: int, size: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
                 user = DBHelper.get_user_by_id(user_id)
@@ -60,9 +63,9 @@ class WishlistController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                wishlists = (
-                    session.query(Wishlist).filter(Wishlist.userId == user_id).all()
-                )
+                query = session.query(Wishlist).filter(Wishlist.userId == user_id)
+
+                wishlists = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not wishlists:
                     return APIHelper.send_error_response(

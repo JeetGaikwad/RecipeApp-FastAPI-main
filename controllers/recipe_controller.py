@@ -2,6 +2,7 @@
 from dtos.base_response_model import BaseResponseModel
 from dtos.recipe_models import RecipeResponseModel, RecipeRequestModel, RecipeTypeEnum
 from helper.api_helper import APIHelper
+from helper.pagination_helper import PaginationHelper
 from config.db_config import SessionLocal
 from models.recipe_table import Recipes
 from models.recipe_likes_table import RecipeLike
@@ -15,13 +16,11 @@ class RecipeController:
     def get_all_recipes(page: int, size: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
-                recipes = (
-                    session.query(Recipes)
-                    .filter(Recipes.isDeleted.is_(False), Recipes.isHide.is_(False))
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
+                query = session.query(Recipes).filter(
+                    Recipes.isDeleted.is_(False), Recipes.isHide.is_(False)
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -80,17 +79,13 @@ class RecipeController:
                         errorMessageKey="translations.UNAUTHORIZE_USER"
                     )
 
-                recipes = (
-                    session.query(Recipes)
-                    .filter(
-                        Recipes.userId == user_id,
-                        Recipes.isDeleted.is_(False),
-                        Recipes.isHide.is_(False),
-                    )
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
+                query = session.query(Recipes).filter(
+                    Recipes.userId == user_id,
+                    Recipes.isDeleted.is_(False),
+                    Recipes.isHide.is_(False),
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -118,17 +113,14 @@ class RecipeController:
     ) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
-                recipes = (
-                    session.query(Recipes)
-                    .filter(
-                        Recipes.recipeType == recipe_type,
-                        Recipes.isDeleted.is_(False),
-                        Recipes.isHide.is_(False),
-                    )
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
+
+                query = session.query(Recipes).filter(
+                    Recipes.recipeType == recipe_type,
+                    Recipes.isDeleted.is_(False),
+                    Recipes.isHide.is_(False),
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -154,17 +146,13 @@ class RecipeController:
     ) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
-                recipes = (
-                    session.query(Recipes)
-                    .filter(
-                        Recipes.peopleCount == people_count,
-                        Recipes.isDeleted.is_(False),
-                        Recipes.isHide.is_(False),
-                    )
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
+                query = session.query(Recipes).filter(
+                    Recipes.peopleCount == people_count,
+                    Recipes.isDeleted.is_(False),
+                    Recipes.isHide.is_(False),
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -190,18 +178,14 @@ class RecipeController:
     def search_recipes(search: str, page: int, size: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
-                recipes = (
-                    session.query(Recipes)
-                    .filter(
-                        (Recipes.recipeName.like(f"%{search}%"))
-                        | (Recipes.description.like(f"%{search}%")),
-                        Recipes.isDeleted.is_(False),
-                        Recipes.isHide.is_(False),
-                    )
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
+                query = session.query(Recipes).filter(
+                    (Recipes.recipeName.like(f"%{search}%"))
+                    | (Recipes.description.like(f"%{search}%")),
+                    Recipes.isDeleted.is_(False),
+                    Recipes.isHide.is_(False),
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
@@ -227,17 +211,16 @@ class RecipeController:
     def get_recipes_by_like(page: int, size: int) -> BaseResponseModel:
         try:
             with SessionLocal() as session:
-                recipes = (
+                query = (
                     session.query(Recipes)
                     .filter(
                         Recipes.isDeleted.is_(False),
                         Recipes.isHide.is_(False),
                     )
                     .order_by(Recipes.likesCount.desc())
-                    .offset((page - 1) * size)
-                    .limit(size)
-                    .all()
                 )
+
+                recipes = PaginationHelper.apply_pagination(query, page, size).all()
 
                 if not recipes:
                     return APIHelper.send_error_response(
