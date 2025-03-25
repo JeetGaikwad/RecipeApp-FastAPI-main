@@ -11,6 +11,10 @@ load_dotenv(dotenv_path)
 
 # Importing libraries
 from fastapi import FastAPI, Request
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
+from contextlib import asynccontextmanager
 from routes.auth import auth
 from routes.users import user
 from routes.recipes import recipe
@@ -22,19 +26,48 @@ from routes.wishlists import wishlist
 from routes.admins import admin
 from fastapi.exceptions import RequestValidationError
 import i18n
+import os
+
+# Database Connection Setup
+DATABASE_URL = f"mysql+aiomysql://{os.getenv('DATABASE_USER')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_URL')}:{os.getenv('DATABASE_PORT')}/{os.getenv('DATABASE_NAME')}"
+engine = create_async_engine(DATABASE_URL, echo=False)
+SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
 # Setup Logger
 setup_logger()
 
 # Setup i18n
-i18n.load_path.append("language/") 
+i18n.load_path.append("language/")
 i18n.set("filename_format", "{namespace}.{locale}.{format}")
 i18n.set("file_format", "json")
 
-# Initializing app
+
+# Lifespan Function for Startup and Shutdown
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+
+    print("🚀 Starting up RecipeApp...")
+
+    # 1️⃣ Test Database Connection
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(lambda conn: conn.execute(text("SELECT 1")))
+        print("✅ Database connected successfully.")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
+
+    yield  # ⏳ The app runs here
+
+    # 3️⃣ Cleanup Resources on Shutdown
+    print("🛑 Shutting down RecipeApp...")
+    await engine.dispose()
+
+
+# Initializing FastAPI with Lifespan
 app = FastAPI(
     title="RecipeApp-FastAPI",
     version="0.0.1",
+    lifespan=lifespan,  # ✅ Adding lifespan here
 )
 
 # Setup CORS
